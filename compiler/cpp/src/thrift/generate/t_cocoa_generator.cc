@@ -313,15 +313,15 @@ string t_cocoa_generator::cocoa_imports() {
 string t_cocoa_generator::cocoa_thrift_imports() {
 
   vector<string> includes_list;
-  includes_list.push_back("TProtocol.h");
-  includes_list.push_back("TProtocolFactory.h");
-  includes_list.push_back("TApplicationError.h");
-  includes_list.push_back("TProtocolError.h");
-  includes_list.push_back("TProtocolUtil.h");
-  includes_list.push_back("TProcessor.h");
-  includes_list.push_back("TBase.h");
-  includes_list.push_back("TAsyncTransport.h");
-  includes_list.push_back("TBaseClient.h");
+  //includes_list.push_back("TProtocol.h");
+  //includes_list.push_back("TProtocolFactory.h");
+  //includes_list.push_back("TApplicationError.h");
+  //includes_list.push_back("TProtocolError.h");
+  //includes_list.push_back("TProtocolUtil.h");
+  //includes_list.push_back("TProcessor.h");
+  //includes_list.push_back("TBase.h");
+  //includes_list.push_back("TAsyncTransport.h");
+  //includes_list.push_back("TBaseClient.h");
 
   std::ostringstream includes;
 
@@ -586,7 +586,7 @@ void t_cocoa_generator::generate_cocoa_struct_interface(ofstream& out,
   } else {
     out << "NSObject ";
   }
-  out << "<TBase, NSCoding, NSCopying> " << endl;
+  //out << "<TBase, NSCoding, NSCopying> " << endl;
 
   out << endl;
 
@@ -596,8 +596,8 @@ void t_cocoa_generator::generate_cocoa_struct_interface(ofstream& out,
     vector<t_field*>::const_iterator m_iter;
     for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
       out << indent() << declare_property(*m_iter) << endl;
-      out << indent() << declare_property_isset(*m_iter) << endl;
-      out << indent() << declare_property_unset(*m_iter) << endl;
+      //out << indent() << declare_property_isset(*m_iter) << endl;
+      //out << indent() << declare_property_unset(*m_iter) << endl;
       out << endl;
     }
   }
@@ -606,10 +606,10 @@ void t_cocoa_generator::generate_cocoa_struct_interface(ofstream& out,
 
   // initializer for all fields
   if (!members.empty()) {
-    generate_cocoa_struct_initializer_signature(out, tstruct);
-    out << ";" << endl;
+    //generate_cocoa_struct_initializer_signature(out, tstruct);
+    //out << ";" << endl;
   }
-  out << endl;
+  //out << endl;
 
   out << "@end" << endl << endl;
 }
@@ -1340,12 +1340,12 @@ void t_cocoa_generator::generate_cocoa_struct_description(ofstream& out, t_struc
  * @param tservice The service definition
  */
 void t_cocoa_generator::generate_service(t_service* tservice) {
-  generate_cocoa_service_protocol(f_header_, tservice);
-  generate_cocoa_service_client_interface(f_header_, tservice);
-  generate_cocoa_service_server_interface(f_header_, tservice);
-  generate_cocoa_service_helpers(tservice);
-  generate_cocoa_service_client_implementation(f_impl_, tservice);
-  generate_cocoa_service_server_implementation(f_impl_, tservice);
+  //generate_cocoa_service_protocol(f_header_, tservice);
+  //generate_cocoa_service_client_interface(f_header_, tservice);
+  //generate_cocoa_service_server_interface(f_header_, tservice);
+  //generate_cocoa_service_helpers(tservice);
+  //generate_cocoa_service_client_implementation(f_impl_, tservice);
+  //generate_cocoa_service_server_implementation(f_impl_, tservice);
   if (async_clients_) {
     generate_cocoa_service_async_protocol(f_header_, tservice);
     generate_cocoa_service_client_async_interface(f_header_, tservice);

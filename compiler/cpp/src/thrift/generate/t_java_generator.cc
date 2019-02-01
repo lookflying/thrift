@@ -858,7 +858,7 @@ void t_java_generator::generate_java_union(t_struct* tstruct) {
 
   f_struct << endl;
 
-  generate_union_hashcode(f_struct, tstruct);
+  //generate_union_hashcode(f_struct, tstruct);
 
   f_struct << endl;
 
@@ -1401,18 +1401,18 @@ void t_java_generator::generate_java_struct_definition(ofstream& out,
   if (is_exception) {
     out << "extends org.apache.thrift.TException ";
   }
-  out << "implements org.apache.thrift.TBase<" << tstruct->get_name() << ", " << tstruct->get_name()
-      << "._Fields>, java.io.Serializable, Cloneable, Comparable<" << tstruct->get_name() << ">";
+  //out << "implements org.apache.thrift.TBase<" << tstruct->get_name() << ", " << tstruct->get_name()
+  //    << "._Fields>, java.io.Serializable, Cloneable, Comparable<" << tstruct->get_name() << ">";
 
-  if (android_style_) {
-    out << ", android.os.Parcelable";
-  }
+  //if (android_style_) {
+  //  out << ", android.os.Parcelable";
+  //}
 
   out << " ";
 
   scope_up(out);
 
-  generate_struct_desc(out, tstruct);
+  //generate_struct_desc(out, tstruct);
 
   // Members are public for -java, private for -javabean
   const vector<t_field*>& members = tstruct->get_members();
@@ -1420,13 +1420,13 @@ void t_java_generator::generate_java_struct_definition(ofstream& out,
 
   out << endl;
 
-  generate_field_descs(out, tstruct);
+  //generate_field_descs(out, tstruct);
 
-  out << endl;
+  //out << endl;
 
-  generate_scheme_map(out, tstruct);
+  //generate_scheme_map(out, tstruct);
 
-  out << endl;
+  //out << endl;
 
   for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
     if (bean_style_ || private_members_) {
@@ -1440,195 +1440,195 @@ void t_java_generator::generate_java_struct_definition(ofstream& out,
 
   out << endl;
 
-  if (android_style_) {
-    generate_java_struct_parcelable(out, tstruct);
-  }
+  //if (android_style_) {
+  //  generate_java_struct_parcelable(out, tstruct);
+  //}
 
-  generate_field_name_constants(out, tstruct);
+  //generate_field_name_constants(out, tstruct);
 
   // isset data
-  if (members.size() > 0) {
-    out << endl;
+  //if (members.size() > 0) {
+  //  out << endl;
 
-    indent(out) << "// isset id assignments" << endl;
+  //  indent(out) << "// isset id assignments" << endl;
 
-    int i = 0;
-    int optionals = 0;
-    for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
-      if ((*m_iter)->get_req() == t_field::T_OPTIONAL) {
-        optionals++;
-      }
-      if (!type_can_be_null((*m_iter)->get_type())) {
-        indent(out) << "private static final int " << isset_field_id(*m_iter) << " = " << i << ";"
-                    << endl;
-        i++;
-      }
-    }
+  //  int i = 0;
+  //  int optionals = 0;
+  //  for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
+  //    if ((*m_iter)->get_req() == t_field::T_OPTIONAL) {
+  //      optionals++;
+  //    }
+  //    if (!type_can_be_null((*m_iter)->get_type())) {
+  //      indent(out) << "private static final int " << isset_field_id(*m_iter) << " = " << i << ";"
+  //                  << endl;
+  //      i++;
+  //    }
+  //  }
 
-    std::string primitiveType;
-    switch (needs_isset(tstruct, &primitiveType)) {
-    case ISSET_NONE:
-      break;
-    case ISSET_PRIMITIVE:
-      indent(out) << "private " << primitiveType << " __isset_bitfield = 0;" << endl;
-      break;
-    case ISSET_BITSET:
-      indent(out) << "private java.util.BitSet __isset_bit_vector = new java.util.BitSet(" << i << ");" << endl;
-      break;
-    }
+  //  std::string primitiveType;
+  //  switch (needs_isset(tstruct, &primitiveType)) {
+  //  case ISSET_NONE:
+  //    break;
+  //  case ISSET_PRIMITIVE:
+  //    indent(out) << "private " << primitiveType << " __isset_bitfield = 0;" << endl;
+  //    break;
+  //  case ISSET_BITSET:
+  //    indent(out) << "private java.util.BitSet __isset_bit_vector = new java.util.BitSet(" << i << ");" << endl;
+  //    break;
+  //  }
 
-    if (optionals > 0) {
-      std::string output_string = "private static final _Fields optionals[] = {";
-      for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
-        if ((*m_iter)->get_req() == t_field::T_OPTIONAL) {
-          output_string = output_string + "_Fields." + constant_name((*m_iter)->get_name()) + ",";
-        }
-      }
-      indent(out) << output_string.substr(0, output_string.length() - 1) << "};" << endl;
-    }
-  }
+  //  if (optionals > 0) {
+  //    std::string output_string = "private static final _Fields optionals[] = {";
+  //    for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
+  //      if ((*m_iter)->get_req() == t_field::T_OPTIONAL) {
+  //        output_string = output_string + "_Fields." + constant_name((*m_iter)->get_name()) + ",";
+  //      }
+  //    }
+  //    indent(out) << output_string.substr(0, output_string.length() - 1) << "};" << endl;
+  //  }
+  //}
 
-  generate_java_meta_data_map(out, tstruct);
+  //generate_java_meta_data_map(out, tstruct);
 
-  bool all_optional_members = true;
+  //bool all_optional_members = true;
 
-  // Default constructor
-  indent(out) << "public " << tstruct->get_name() << "() {" << endl;
-  indent_up();
-  for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
-    t_type* t = get_true_type((*m_iter)->get_type());
-    if ((*m_iter)->get_value() != NULL) {
-      print_const_value(out,
-                        "this." + (*m_iter)->get_name(),
-                        t,
-                        (*m_iter)->get_value(),
-                        true,
-                        true);
-    }
-    if ((*m_iter)->get_req() != t_field::T_OPTIONAL) {
-      all_optional_members = false;
-    }
-  }
-  indent_down();
-  indent(out) << "}" << endl << endl;
+  //// Default constructor
+  //indent(out) << "public " << tstruct->get_name() << "() {" << endl;
+  //indent_up();
+  //for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
+  //  t_type* t = get_true_type((*m_iter)->get_type());
+  //  if ((*m_iter)->get_value() != NULL) {
+  //    print_const_value(out,
+  //                      "this." + (*m_iter)->get_name(),
+  //                      t,
+  //                      (*m_iter)->get_value(),
+  //                      true,
+  //                      true);
+  //  }
+  //  if ((*m_iter)->get_req() != t_field::T_OPTIONAL) {
+  //    all_optional_members = false;
+  //  }
+  //}
+  //indent_down();
+  //indent(out) << "}" << endl << endl;
 
-  if (!members.empty() && !all_optional_members) {
-    // Full constructor for all fields
-    indent(out) << "public " << tstruct->get_name() << "(" << endl;
-    indent_up();
-    bool first = true;
-    for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
-      if ((*m_iter)->get_req() != t_field::T_OPTIONAL) {
-        if (!first) {
-          out << "," << endl;
-        }
-        first = false;
-        indent(out) << type_name((*m_iter)->get_type()) << " " << (*m_iter)->get_name();
-      }
-    }
-    out << ")" << endl;
-    indent_down();
-    indent(out) << "{" << endl;
-    indent_up();
-    indent(out) << "this();" << endl;
-    for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
-      if ((*m_iter)->get_req() != t_field::T_OPTIONAL) {
-        t_type* type = get_true_type((*m_iter)->get_type());
-        if (type->is_binary()) {
-          indent(out) << "this." << (*m_iter)->get_name()
-                      << " = org.apache.thrift.TBaseHelper.copyBinary(" << (*m_iter)->get_name()
-                      << ");" << endl;
-        } else {
-          indent(out) << "this." << (*m_iter)->get_name() << " = " << (*m_iter)->get_name() << ";"
-                      << endl;
-        }
-        generate_isset_set(out, (*m_iter), "");
-      }
-    }
+  //if (!members.empty() && !all_optional_members) {
+  //  // Full constructor for all fields
+  //  indent(out) << "public " << tstruct->get_name() << "(" << endl;
+  //  indent_up();
+  //  bool first = true;
+  //  for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
+  //    if ((*m_iter)->get_req() != t_field::T_OPTIONAL) {
+  //      if (!first) {
+  //        out << "," << endl;
+  //      }
+  //      first = false;
+  //      indent(out) << type_name((*m_iter)->get_type()) << " " << (*m_iter)->get_name();
+  //    }
+  //  }
+  //  out << ")" << endl;
+  //  indent_down();
+  //  indent(out) << "{" << endl;
+  //  indent_up();
+  //  indent(out) << "this();" << endl;
+  //  for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
+  //    if ((*m_iter)->get_req() != t_field::T_OPTIONAL) {
+  //      t_type* type = get_true_type((*m_iter)->get_type());
+  //      if (type->is_binary()) {
+  //        indent(out) << "this." << (*m_iter)->get_name()
+  //                    << " = org.apache.thrift.TBaseHelper.copyBinary(" << (*m_iter)->get_name()
+  //                    << ");" << endl;
+  //      } else {
+  //        indent(out) << "this." << (*m_iter)->get_name() << " = " << (*m_iter)->get_name() << ";"
+  //                    << endl;
+  //      }
+  //      generate_isset_set(out, (*m_iter), "");
+  //    }
+  //  }
 
-    indent_down();
-    indent(out) << "}" << endl << endl;
-  }
+  //  indent_down();
+  //  indent(out) << "}" << endl << endl;
+  //}
 
-  // copy constructor
-  indent(out) << "/**" << endl;
-  indent(out) << " * Performs a deep copy on <i>other</i>." << endl;
-  indent(out) << " */" << endl;
-  indent(out) << "public " << tstruct->get_name() << "(" << tstruct->get_name() << " other) {"
-              << endl;
-  indent_up();
+  //// copy constructor
+  //indent(out) << "/**" << endl;
+  //indent(out) << " * Performs a deep copy on <i>other</i>." << endl;
+  //indent(out) << " */" << endl;
+  //indent(out) << "public " << tstruct->get_name() << "(" << tstruct->get_name() << " other) {"
+  //            << endl;
+  //indent_up();
 
-  switch (needs_isset(tstruct)) {
-  case ISSET_NONE:
-    break;
-  case ISSET_PRIMITIVE:
-    indent(out) << "__isset_bitfield = other.__isset_bitfield;" << endl;
-    break;
-  case ISSET_BITSET:
-    indent(out) << "__isset_bit_vector.clear();" << endl;
-    indent(out) << "__isset_bit_vector.or(other.__isset_bit_vector);" << endl;
-    break;
-  }
+  //switch (needs_isset(tstruct)) {
+  //case ISSET_NONE:
+  //  break;
+  //case ISSET_PRIMITIVE:
+  //  indent(out) << "__isset_bitfield = other.__isset_bitfield;" << endl;
+  //  break;
+  //case ISSET_BITSET:
+  //  indent(out) << "__isset_bit_vector.clear();" << endl;
+  //  indent(out) << "__isset_bit_vector.or(other.__isset_bit_vector);" << endl;
+  //  break;
+  //}
 
-  for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
-    t_field* field = (*m_iter);
-    std::string field_name = field->get_name();
-    t_type* type = field->get_type()->get_true_type();
-    bool can_be_null = type_can_be_null(type);
+  //for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
+  //  t_field* field = (*m_iter);
+  //  std::string field_name = field->get_name();
+  //  t_type* type = field->get_type()->get_true_type();
+  //  bool can_be_null = type_can_be_null(type);
 
-    if (can_be_null) {
-      indent(out) << "if (other." << generate_isset_check(field) << ") {" << endl;
-      indent_up();
-    }
+  //  if (can_be_null) {
+  //    indent(out) << "if (other." << generate_isset_check(field) << ") {" << endl;
+  //    indent_up();
+  //  }
 
-    if (type->is_container()) {
-      generate_deep_copy_container(out, "other", field_name, "__this__" + field_name, type);
-      indent(out) << "this." << field_name << " = __this__" << field_name << ";" << endl;
-    } else {
-      indent(out) << "this." << field_name << " = ";
-      generate_deep_copy_non_container(out, "other." + field_name, field_name, type);
-      out << ";" << endl;
-    }
+  //  if (type->is_container()) {
+  //    generate_deep_copy_container(out, "other", field_name, "__this__" + field_name, type);
+  //    indent(out) << "this." << field_name << " = __this__" << field_name << ";" << endl;
+  //  } else {
+  //    indent(out) << "this." << field_name << " = ";
+  //    generate_deep_copy_non_container(out, "other." + field_name, field_name, type);
+  //    out << ";" << endl;
+  //  }
 
-    if (can_be_null) {
-      indent_down();
-      indent(out) << "}" << endl;
-    }
-  }
+  //  if (can_be_null) {
+  //    indent_down();
+  //    indent(out) << "}" << endl;
+  //  }
+  //}
 
-  indent_down();
-  indent(out) << "}" << endl << endl;
+  //indent_down();
+  //indent(out) << "}" << endl << endl;
 
-  // clone method, so that you can deep copy an object when you don't know its class.
-  indent(out) << "public " << tstruct->get_name() << " deepCopy() {" << endl;
-  indent(out) << "  return new " << tstruct->get_name() << "(this);" << endl;
-  indent(out) << "}" << endl << endl;
+  //// clone method, so that you can deep copy an object when you don't know its class.
+  //indent(out) << "public " << tstruct->get_name() << " deepCopy() {" << endl;
+  //indent(out) << "  return new " << tstruct->get_name() << "(this);" << endl;
+  //indent(out) << "}" << endl << endl;
 
-  generate_java_struct_clear(out, tstruct);
+  //generate_java_struct_clear(out, tstruct);
 
-  generate_java_bean_boilerplate(out, tstruct);
-  generate_generic_field_getters_setters(out, tstruct);
-  generate_generic_isset_method(out, tstruct);
+  //generate_java_bean_boilerplate(out, tstruct);
+  //generate_generic_field_getters_setters(out, tstruct);
+  //generate_generic_isset_method(out, tstruct);
 
-  generate_java_struct_equality(out, tstruct);
-  generate_java_struct_compare_to(out, tstruct);
-  generate_java_struct_field_by_id(out, tstruct);
+  //generate_java_struct_equality(out, tstruct);
+  //generate_java_struct_compare_to(out, tstruct);
+  //generate_java_struct_field_by_id(out, tstruct);
 
-  generate_java_struct_reader(out, tstruct);
+  //generate_java_struct_reader(out, tstruct);
   if (is_result) {
-    generate_java_struct_result_writer(out, tstruct);
+  //  generate_java_struct_result_writer(out, tstruct);
   } else {
-    generate_java_struct_writer(out, tstruct);
+  //  generate_java_struct_writer(out, tstruct);
   }
   generate_java_struct_tostring(out, tstruct);
-  generate_java_validator(out, tstruct);
+  //generate_java_validator(out, tstruct);
 
-  generate_java_struct_write_object(out, tstruct);
-  generate_java_struct_read_object(out, tstruct);
+  //generate_java_struct_write_object(out, tstruct);
+  //generate_java_struct_read_object(out, tstruct);
 
-  generate_java_struct_standard_scheme(out, tstruct, is_result);
-  generate_java_struct_tuple_scheme(out, tstruct);
-  generate_java_scheme_lookup(out);
+  //generate_java_struct_standard_scheme(out, tstruct, is_result);
+  //generate_java_struct_tuple_scheme(out, tstruct);
+  //generate_java_scheme_lookup(out);
 
   scope_down(out);
   out << endl;

@@ -924,90 +924,90 @@ void t_cocoa_generator::generate_cocoa_struct_implementation(ofstream& out,
 
   // exceptions need to call the designated initializer on NSException
   if (is_exception) {
-    out << indent() << "- (instancetype) init" << endl;
-    scope_up(out);
-    out << indent() << "return [super initWithDomain: " << cocoa_prefix_ << capitalize(program_name_) << "ErrorDomain" << endl
-        << indent() << "                        code: " << cocoa_prefix_ << capitalize(program_name_) << "Error" << tstruct->get_name() << endl
-        << indent() << "                    userInfo: nil];" << endl;
-    scope_down(out);
-    out << endl;
+//    out << indent() << "- (instancetype) init" << endl;
+//    scope_up(out);
+//    out << indent() << "return [super initWithDomain: " << cocoa_prefix_ << capitalize(program_name_) << "ErrorDomain" << endl
+//        << indent() << "                        code: " << cocoa_prefix_ << capitalize(program_name_) << "Error" << tstruct->get_name() << endl
+//        << indent() << "                    userInfo: nil];" << endl;
+//    scope_down(out);
+//    out << endl;
   } else {
     // struct
 
     // default initializer
     // setup instance variables with default values
-    indent(out) << "- (instancetype) init" << endl;
-    scope_up(out);
-    indent(out) << "self = [super init];" << endl;
-    indent(out) << "if (self)";
-    scope_up(out);
-    if (members.size() > 0) {
-      for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
-        t_type* t = get_true_type((*m_iter)->get_type());
-        if ((*m_iter)->get_value() != NULL) {
-          print_const_value(out,
-                            "self." + (*m_iter)->get_name(),
-                            t,
-                            (*m_iter)->get_value(),
-                            false);
-        }
-      }
-    }
-    scope_down(out);
-    indent(out) << "return self;" << endl;
-    scope_down(out);
-    out << endl;
+//    indent(out) << "- (instancetype) init" << endl;
+//    scope_up(out);
+//    indent(out) << "self = [super init];" << endl;
+//    indent(out) << "if (self)";
+//    scope_up(out);
+//    if (members.size() > 0) {
+//      for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
+//        t_type* t = get_true_type((*m_iter)->get_type());
+//        if ((*m_iter)->get_value() != NULL) {
+//          print_const_value(out,
+//                            "self." + (*m_iter)->get_name(),
+//                            t,
+//                            (*m_iter)->get_value(),
+//                            false);
+//        }
+//      }
+//    }
+//    scope_down(out);
+//    indent(out) << "return self;" << endl;
+//    scope_down(out);
+//    out << endl;
   }
 
   // initializer with all fields as params
   if (!members.empty()) {
-    generate_cocoa_struct_initializer_signature(out, tstruct);
-    out << endl;
-    scope_up(out);
-    if (is_exception) {
-      out << indent() << "self = [self init];" << endl;
-    } else {
-      out << indent() << "self = [super init];" << endl;
-    }
-
-    indent(out) << "if (self)";
-    scope_up(out);
-    for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
-      out << indent() << "_" << (*m_iter)->get_name() << " = ";
-      if (get_true_type((*m_iter)->get_type())->is_container()) {
-        out << "[" << (*m_iter)->get_name() << " mutableCopy];" << endl;
-      } else {
-        out << (*m_iter)->get_name() << ";" << endl;
-      }
-      out << indent() << "_" << (*m_iter)->get_name() << "IsSet = YES;" << endl;
-    }
-    scope_down(out);
-
-    out << indent() << "return self;" << endl;
-    scope_down(out);
-    out << endl;
+//    generate_cocoa_struct_initializer_signature(out, tstruct);
+//    out << endl;
+//    scope_up(out);
+//    if (is_exception) {
+//      out << indent() << "self = [self init];" << endl;
+//    } else {
+//      out << indent() << "self = [super init];" << endl;
+//    }
+//
+//    indent(out) << "if (self)";
+//    scope_up(out);
+//    for (m_iter = members.begin(); m_iter != members.end(); ++m_iter) {
+//      out << indent() << "_" << (*m_iter)->get_name() << " = ";
+//      if (get_true_type((*m_iter)->get_type())->is_container()) {
+//        out << "[" << (*m_iter)->get_name() << " mutableCopy];" << endl;
+//      } else {
+//        out << (*m_iter)->get_name() << ";" << endl;
+//      }
+//      out << indent() << "_" << (*m_iter)->get_name() << "IsSet = YES;" << endl;
+//    }
+//    scope_down(out);
+//
+//    out << indent() << "return self;" << endl;
+//    scope_down(out);
+//    out << endl;
   }
 
   // initWithCoder for NSCoding
-  generate_cocoa_struct_init_with_coder_method(out, tstruct, is_exception);
+//  generate_cocoa_struct_init_with_coder_method(out, tstruct, is_exception);
   // encodeWithCoder for NSCoding
-  generate_cocoa_struct_encode_with_coder_method(out, tstruct, is_exception);
+//  generate_cocoa_struct_encode_with_coder_method(out, tstruct, is_exception);
   // hash and isEqual for NSObject
-  generate_cocoa_struct_hash_method(out, tstruct);
-  generate_cocoa_struct_is_equal_method(out, tstruct, is_exception);
+//  generate_cocoa_struct_hash_method(out, tstruct);
+//  generate_cocoa_struct_is_equal_method(out, tstruct, is_exception);
   // copy for NSObject
-  generate_cocoa_struct_copy_method(out, tstruct, is_exception);
+//  generate_cocoa_struct_copy_method(out, tstruct, is_exception);
 
   // the rest of the methods
   generate_cocoa_struct_field_accessor_implementations(out, tstruct, is_exception);
-  generate_cocoa_struct_reader(out, tstruct);
+//  generate_cocoa_struct_reader(out, tstruct);
   if (is_result) {
-    generate_cocoa_struct_result_writer(out, tstruct);
+//    generate_cocoa_struct_result_writer(out, tstruct);
   } else {
-    generate_cocoa_struct_writer(out, tstruct);
+//    generate_cocoa_struct_writer(out, tstruct);
   }
-  generate_cocoa_struct_validator(out, tstruct);
-  generate_cocoa_struct_description(out, tstruct);
+//  generate_cocoa_struct_validator(out, tstruct);
+//  generate_cocoa_struct_description(out, tstruct);
 
   out << "@end" << endl << endl;
 }

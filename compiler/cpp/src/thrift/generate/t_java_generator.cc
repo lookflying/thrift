@@ -1620,7 +1620,7 @@ void t_java_generator::generate_java_struct_definition(ofstream& out,
   } else {
   //  generate_java_struct_writer(out, tstruct);
   }
-  generate_java_struct_tostring(out, tstruct);
+  //generate_java_struct_tostring(out, tstruct);
   //generate_java_validator(out, tstruct);
 
   //generate_java_struct_write_object(out, tstruct);

@@ -442,8 +442,8 @@ void t_cocoa_generator::generate_enum(t_enum* tenum) {
 void t_cocoa_generator::generate_consts(std::vector<t_const*> consts) {
   std::ostringstream const_interface;
 
-  const_interface << "FOUNDATION_EXPORT NSString *" << cocoa_prefix_ << capitalize(program_name_) << "ErrorDomain;" << endl
-                  << endl;
+  //const_interface << "FOUNDATION_EXPORT NSString *" << cocoa_prefix_ << capitalize(program_name_) << "ErrorDomain;" << endl
+  //                << endl;
 
 
   bool needs_class = false;

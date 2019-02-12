@@ -487,6 +487,8 @@ void t_java_generator::generate_enum(t_enum* tenum) {
   // Comment and package it
   f_enum << autogen_comment() << java_package() << endl;
 
+  f_enum << "import com.google.gson.annotations.SerializedName;" << endl << endl;
+
   generate_java_doc(f_enum, tenum);
   if (is_deprecated) {
     indent(f_enum) << "@Deprecated" << endl;
@@ -510,6 +512,7 @@ void t_java_generator::generate_enum(t_enum* tenum) {
     if (this->is_deprecated((*c_iter)->annotations_)) {
       indent(f_enum) << "@Deprecated" << endl;
     }
+    indent(f_enum) << "@SerializedName(\"" << value << "\")" << endl;
     indent(f_enum) << (*c_iter)->get_name() << "(" << value << ")";
   }
   f_enum << ";" << endl << endl;

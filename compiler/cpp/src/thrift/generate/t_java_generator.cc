@@ -491,7 +491,7 @@ void t_java_generator::generate_enum(t_enum* tenum) {
   if (is_deprecated) {
     indent(f_enum) << "@Deprecated" << endl;
   }
-  indent(f_enum) << "public enum " << tenum->get_name() << " implements org.apache.thrift.TEnum ";
+  indent(f_enum) << "public enum " << tenum->get_name();// << " implements org.apache.thrift.TEnum ";
   scope_up(f_enum);
 
   vector<t_enum_value*> constants = tenum->get_constants();

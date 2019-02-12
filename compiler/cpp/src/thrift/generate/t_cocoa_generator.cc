@@ -999,7 +999,7 @@ void t_cocoa_generator::generate_cocoa_struct_implementation(ofstream& out,
 //  generate_cocoa_struct_copy_method(out, tstruct, is_exception);
 
   // the rest of the methods
-  generate_cocoa_struct_field_accessor_implementations(out, tstruct, is_exception);
+//  generate_cocoa_struct_field_accessor_implementations(out, tstruct, is_exception);
 //  generate_cocoa_struct_reader(out, tstruct);
   if (is_result) {
 //    generate_cocoa_struct_result_writer(out, tstruct);
